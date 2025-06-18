@@ -504,7 +504,7 @@ class PTaxCalculator {
         const endMonth = monthMap[toMonth?.toUpperCase()] || 3; // Default to March if not found
 
         const monthOrder = [];
-        
+
         // If start month is later in year than end month, it crosses year boundary
         if (startMonth > endMonth) {
             // Add months from start month to December
