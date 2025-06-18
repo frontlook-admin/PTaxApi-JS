@@ -1,0 +1,44 @@
+{
+    "name": "ptax-calculator-js",
+    "version": "1.0.0",
+    "description": "Professional Tax Calculator for Indian States - Client-side JavaScript implementation",
+    "keywords": [
+        "professional tax",
+        "ptax",
+        "calculator",
+        "indian tax",
+        "state tax",
+        "salary calculator",
+        "javascript",
+        "client-side"
+    ],
+    "author": "FrontLook Admin",
+    "license": "MIT",
+    "homepage": "https://frontlook-admin.github.io/PTaxApi-JS/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/frontlook-admin/PTaxApi-JS.git"
+    },
+    "bugs": {
+        "url": "https://github.com/frontlook-admin/PTaxApi-JS/issues"
+    },
+    "scripts": {
+        "start": "http-server . -p 3000 -o",
+        "build": "echo 'Static site - no build required'",
+        "test": "echo 'No tests configured yet'",
+        "dev": "http-server . -p 3000 -o -c-1",
+        "deploy": "gh-pages -d ."
+    },
+    "devDependencies": {
+        "http-server": "^14.1.1",
+        "gh-pages": "^6.1.1"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}

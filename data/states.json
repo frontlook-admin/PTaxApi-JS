@@ -1,0 +1,353 @@
+[
+  {
+    "stateId": 1,
+    "stateName": "Jammu and Kashmir",
+    "stateCode": "JK",
+    "countryId": 1,
+    "govId": 1,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 2,
+    "stateName": "Himachal Pradesh",
+    "stateCode": "HP",
+    "countryId": 1,
+    "govId": 2,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 3,
+    "stateName": "Punjab",
+    "stateCode": "PB",
+    "countryId": 1,
+    "govId": 3,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 4,
+    "stateName": "Chandigarh",
+    "stateCode": "CH",
+    "countryId": 1,
+    "govId": 4,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 5,
+    "stateName": "Uttarakhand",
+    "stateCode": "UA",
+    "countryId": 1,
+    "govId": 5,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 6,
+    "stateName": "Haryana",
+    "stateCode": "HR",
+    "countryId": 1,
+    "govId": 6,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 7,
+    "stateName": "Delhi",
+    "stateCode": "DL",
+    "countryId": 1,
+    "govId": 7,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 8,
+    "stateName": "Rajasthan",
+    "stateCode": "RJ",
+    "countryId": 1,
+    "govId": 8,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 9,
+    "stateName": "Uttar Pradesh",
+    "stateCode": "UP",
+    "countryId": 1,
+    "govId": 9,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 10,
+    "stateName": "Bihar",
+    "stateCode": "BR",
+    "countryId": 1,
+    "govId": 10,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 11,
+    "stateName": "Sikkim",
+    "stateCode": "SK",
+    "countryId": 1,
+    "govId": 11,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 12,
+    "stateName": "Arunachal Pradesh",
+    "stateCode": "AR",
+    "countryId": 1,
+    "govId": 12,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 13,
+    "stateName": "Nagaland",
+    "stateCode": "NL",
+    "countryId": 1,
+    "govId": 13,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 14,
+    "stateName": "Manipur",
+    "stateCode": "MN",
+    "countryId": 1,
+    "govId": 14,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 15,
+    "stateName": "Mizoram",
+    "stateCode": "MZ",
+    "countryId": 1,
+    "govId": 15,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 16,
+    "stateName": "Tripura",
+    "stateCode": "TR",
+    "countryId": 1,
+    "govId": 16,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 17,
+    "stateName": "Meghalaya",
+    "stateCode": "ML",
+    "countryId": 1,
+    "govId": 17,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 18,
+    "stateName": "Assam",
+    "stateCode": "AS",
+    "countryId": 1,
+    "govId": 18,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 19,
+    "stateName": "West Bengal",
+    "stateCode": "WB",
+    "countryId": 1,
+    "govId": 19,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 20,
+    "stateName": "Jharkhand",
+    "stateCode": "JH",
+    "countryId": 1,
+    "govId": 20,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 21,
+    "stateName": "Odisha",
+    "stateCode": "OR",
+    "countryId": 1,
+    "govId": 21,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 22,
+    "stateName": "Chhattisgarh",
+    "stateCode": "CG",
+    "countryId": 1,
+    "govId": 22,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 23,
+    "stateName": "Madhya Pradesh",
+    "stateCode": "MP",
+    "countryId": 1,
+    "govId": 23,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 24,
+    "stateName": "Gujarat",
+    "stateCode": "GJ",
+    "countryId": 1,
+    "govId": 24,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 25,
+    "stateName": "Daman and Diu",
+    "stateCode": "DD",
+    "countryId": 1,
+    "govId": 25,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 26,
+    "stateName": "Dadra and Nagar Haveli",
+    "stateCode": "DNHDD",
+    "countryId": 1,
+    "govId": 26,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 27,
+    "stateName": "Maharashtra",
+    "stateCode": "MH",
+    "countryId": 1,
+    "govId": 27,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 28,
+    "stateName": "Karnataka",
+    "stateCode": "KA",
+    "countryId": 1,
+    "govId": 29,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 29,
+    "stateName": "Goa",
+    "stateCode": "GA",
+    "countryId": 1,
+    "govId": 30,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 30,
+    "stateName": "Lakshadweep",
+    "stateCode": "LD",
+    "countryId": 1,
+    "govId": 31,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 31,
+    "stateName": "Kerala",
+    "stateCode": "KL",
+    "countryId": 1,
+    "govId": 32,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 32,
+    "stateName": "Tamil Nadu",
+    "stateCode": "TN",
+    "countryId": 1,
+    "govId": 33,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 33,
+    "stateName": "Puducherry",
+    "stateCode": "PY",
+    "countryId": 1,
+    "govId": 34,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 34,
+    "stateName": "Andaman and Nicobar Islands",
+    "stateCode": "AN",
+    "countryId": 1,
+    "govId": 35,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 35,
+    "stateName": "Telangana",
+    "stateCode": "TS",
+    "countryId": 1,
+    "govId": 36,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 36,
+    "stateName": "Andhra Pradesh",
+    "stateCode": "AP",
+    "countryId": 1,
+    "govId": 37,
+    "isUT": false,
+    "isActive": false
+  },
+  {
+    "stateId": 37,
+    "stateName": "Ladakh",
+    "stateCode": "LA",
+    "countryId": 1,
+    "govId": 38,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 38,
+    "stateName": "Other Territory",
+    "stateCode": "0T",
+    "countryId": 1,
+    "govId": 97,
+    "isUT": true,
+    "isActive": false
+  },
+  {
+    "stateId": 39,
+    "stateName": "Other Country",
+    "stateCode": "0C",
+    "countryId": 1,
+    "govId": 98,
+    "isUT": true,
+    "isActive": false
+  }
+]
