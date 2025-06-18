@@ -393,7 +393,10 @@ class PTaxCalculator {
         const installments = [];
         const basePTaxAmount = slab.PTaxAmt || 0;
 
-        for (let month = 1; month <= 12; month++) {
+        // Derive the month order from slab's session months
+        const sessionOrder = this.getSessionMonthOrder(slab.ptaxSessionFromMonth, slab.ptaxSessionToMonth);
+
+        for (const month of sessionOrder) {
             const overrideAmount = this.parseOverrideAmount(slab.overrideAmt, month);
             const amount = overrideAmount !== null ? overrideAmount : basePTaxAmount;
 
@@ -479,6 +482,47 @@ class PTaxCalculator {
             modes.add(slab.collectionMode);
         });
         return Array.from(modes);
+    }    /**
+     * Get the month order based on session start and end months
+     * @param {string} fromMonth - Session start month (e.g., "APRIL")
+     * @param {string} toMonth - Session end month (e.g., "MARCH")
+     * @returns {number[]} Array of month numbers in session order
+     * 
+     * Examples:
+     * - APRIL to MARCH: [4,5,6,7,8,9,10,11,12,1,2,3] (Financial year)
+     * - JANUARY to DECEMBER: [1,2,3,4,5,6,7,8,9,10,11,12] (Calendar year)
+     * - JULY to JUNE: [7,8,9,10,11,12,1,2,3,4,5,6] (Different fiscal year)
+     */
+    getSessionMonthOrder(fromMonth, toMonth) {
+        const monthMap = {
+            'JANUARY': 1, 'FEBRUARY': 2, 'MARCH': 3, 'APRIL': 4,
+            'MAY': 5, 'JUNE': 6, 'JULY': 7, 'AUGUST': 8,
+            'SEPTEMBER': 9, 'OCTOBER': 10, 'NOVEMBER': 11, 'DECEMBER': 12
+        };
+
+        const startMonth = monthMap[fromMonth?.toUpperCase()] || 4; // Default to April if not found
+        const endMonth = monthMap[toMonth?.toUpperCase()] || 3; // Default to March if not found
+
+        const monthOrder = [];
+        
+        // If start month is later in year than end month, it crosses year boundary
+        if (startMonth > endMonth) {
+            // Add months from start month to December
+            for (let month = startMonth; month <= 12; month++) {
+                monthOrder.push(month);
+            }
+            // Add months from January to end month
+            for (let month = 1; month <= endMonth; month++) {
+                monthOrder.push(month);
+            }
+        } else {
+            // Same year, add months from start to end
+            for (let month = startMonth; month <= endMonth; month++) {
+                monthOrder.push(month);
+            }
+        }
+
+        return monthOrder;
     }
 }
 
