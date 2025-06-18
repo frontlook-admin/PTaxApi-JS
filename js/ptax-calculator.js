@@ -123,20 +123,17 @@ class PTaxCalculator {
                 collectionMode: 'N/A',
                 breakdown: this.generateBreakdown(0, 0, 'N/A', 'Salary below minimum tax threshold')
             };
-        }
-
-        // Calculate PTax amount using C# logic
-        const ptaxAmount = this.getPTaxAmount(applicableSlab, date);
-        const monthlyPTax = ptaxAmount;
-        const yearlyPTax = this.calculateYearlyPTax(monthlyPTax, applicableSlab.collectionMode);
+        }        // Calculate PTax amount using C# logic (matches exactly)
+        const monthlyPTax = this.getPTaxAmount(applicableSlab, date);
+        const yearlyPTax = this.calculateYearlyPTax(applicableSlab, date);
 
         return {
             stateName: state.stateName,
             stateCode: state.stateCode,
             salary: salary,
             gender: gender,
-            monthlyPTax: monthlyPTax,
-            yearlyPTax: yearlyPTax,
+            monthlyPTax: monthlyPTax, // Amount for this specific month
+            yearlyPTax: yearlyPTax, // Total yearly amount (sum of all 12 months)
             applicableSlab: applicableSlab,
             message: 'PTax calculated successfully',
             collectionMode: applicableSlab.collectionMode,
@@ -204,10 +201,8 @@ class PTaxCalculator {
 
             return salaryNum >= amtFrom && salaryNum <= amtTo;
         });
-    }
-
-    /**
-     * Get PTax amount for a slab and date (matches C# GetPTaxAmount logic)
+    }    /**
+     * Get PTax amount for a slab and date (matches C# GetPTaxAmount logic exactly)
      */
     getPTaxAmount(slab, date) {
         const month = date.getMonth() + 1; // JavaScript months are 0-based
@@ -220,26 +215,25 @@ class PTaxCalculator {
             }
         }
 
-        // Handle collection mode and collection months (C# collection logic)
+        // Handle collection mode and collection months (exactly like C# logic)
         if (slab.collectionMode === 'MONTHLY') {
             return slab.monthlyPTaxAmt || 0;
         } else {
-            // Check if this month is a collection month for the current mode
+            // Find collection months for this mode
             const collectionMonths = this.parseCollectionMonths(slab.ptaxCollectionMonth, slab.collectionMode);
-
+            
             if (collectionMonths && collectionMonths.includes(month)) {
                 switch (slab.collectionMode.toUpperCase()) {
                     case 'YEARLY':
-                        return slab.monthlyPTaxAmt || 0;
+                        return slab.monthlyPTaxAmt || 0; // Base amount, not multiplied
                     case 'QUARTERLY':
-                        return (slab.monthlyPTaxAmt || 0) * 3;
+                        return slab.monthlyPTaxAmt ? slab.monthlyPTaxAmt * 3 : 0; // 3 months worth
                     case 'HALF YEARLY':
-                        return (slab.monthlyPTaxAmt || 0) * 6;
+                        return slab.monthlyPTaxAmt ? slab.monthlyPTaxAmt * 6 : 0; // 6 months worth
                     default:
                         return slab.monthlyPTaxAmt || 0;
                 }
             }
-
             // Not a collection month for this mode
             return 0;
         }
@@ -307,21 +301,20 @@ class PTaxCalculator {
                 return null;
         }
     }    /**
-     * Calculate yearly PTax based on collection mode (matches C# logic)
+     * Calculate yearly PTax by summing up all 12 months (proper calculation)
      */
-    calculateYearlyPTax(monthlyPTax, collectionMode) {
-        switch (collectionMode.toUpperCase()) {
-            case 'MONTHLY':
-                return monthlyPTax * 12;
-            case 'YEARLY':
-                return monthlyPTax; // Single yearly payment
-            case 'QUARTERLY':
-                return monthlyPTax * 4; // 4 quarterly payments
-            case 'HALF YEARLY':
-                return monthlyPTax * 2; // 2 half-yearly payments
-            default:
-                return monthlyPTax * 12;
+    calculateYearlyPTax(slab, baseDate) {
+        let yearlyTotal = 0;
+        const year = baseDate.getFullYear();
+        
+        // Calculate PTax for each month of the year
+        for (let month = 1; month <= 12; month++) {
+            const monthDate = new Date(year, month - 1, 1); // month - 1 because JS months are 0-based
+            const monthlyAmount = this.getPTaxAmount(slab, monthDate);
+            yearlyTotal += monthlyAmount;
         }
+        
+        return yearlyTotal;
     }
 
     /**
