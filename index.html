@@ -3,30 +3,125 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PTax Calculator - Indian Professional Tax Calculator</title>
+    <title id="pageTitle">
+      Professional Tax Calculator India - PTax Calculator for All States
+    </title>
     <meta
       name="description"
-      content="Calculate Professional Tax (PTax) for Indian states. Comprehensive PTax calculator with state-wise tax slabs, gender-specific rules, and multiple collection modes."
+      id="pageDescription"
+      content="Free Professional Tax Calculator for India. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes. Get instant PTax calculation results."
     />
     <meta
       name="keywords"
-      content="professional tax, ptax calculator, indian tax, state tax, salary tax calculator"
+      content="professional tax calculator, ptax calculator india, professional tax, salary tax calculator, indian tax calculator, state tax calculator, ptax slabs, professional tax slabs india"
     />
+    <meta name="author" content="PTax Calculator Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+    <meta name="theme-color" content="#0d6efd" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://frontlook-admin.github.io/PTaxApi-JS/"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 
     <!-- Open Graph Meta Tags -->
     <meta
       property="og:title"
-      content="PTax Calculator - Indian Professional Tax Calculator"
+      id="ogTitle"
+      content="Professional Tax Calculator India - PTax Calculator for All States"
     />
     <meta
       property="og:description"
-      content="Free online Professional Tax calculator for Indian states with comprehensive tax slabs and gender-specific rules."
+      id="ogDescription"
+      content="Free Professional Tax Calculator for India. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes."
     />
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
       content="https://frontlook-admin.github.io/PTaxApi-JS/"
     />
+    <meta
+      property="og:image"
+      content="https://frontlook-admin.github.io/PTaxApi-JS/images/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="PTax Calculator India" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      id="twitterTitle"
+      content="Professional Tax Calculator India"
+    />
+    <meta
+      name="twitter:description"
+      id="twitterDescription"
+      content="Free Professional Tax Calculator for India. Calculate PTax for all 39 states & UTs with salary-based slabs."
+    />
+    <meta
+      name="twitter:image"
+      content="https://frontlook-admin.github.io/PTaxApi-JS/images/twitter-card.png"
+    />
+    <meta name="twitter:site" content="@ptaxcalculator" />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="application-name" content="PTax Calculator India" />
+    <meta name="msapplication-TileColor" content="#0d6efd" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json" id="structuredData">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Professional Tax Calculator India",
+        "description": "Free Professional Tax Calculator for India. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes.",
+        "url": "https://frontlook-admin.github.io/PTaxApi-JS/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "PTax Calculator Team",
+          "url": "https://github.com/frontlook-admin/PTaxApi-JS"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "PTax Calculator India",
+          "url": "https://frontlook-admin.github.io/PTaxApi-JS/"
+        },
+        "featureList": [
+          "Professional Tax Calculation",
+          "39 States & Union Territories Support",
+          "Salary-based Tax Slabs",
+          "Gender-specific Rules",
+          "Multiple Collection Modes",
+          "Real-time Calculation"
+        ],
+        "screenshot": "https://frontlook-admin.github.io/PTaxApi-JS/images/screenshot.png",
+        "softwareVersion": "1.0.0",
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01"
+      }
+    </script>
 
     <!-- Bootstrap CSS -->
     <link
@@ -40,40 +135,132 @@
     />
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="js/ptax-calculator.js" as="script" />
+    <link rel="preload" href="js/app.js" as="script" />
+
+    <!-- Dynamic Year Update Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentYear = new Date().getFullYear();
+        const nextYear = currentYear + 1;
+        const yearRange = `${currentYear}-${nextYear}`;
+
+        // Update page title
+        document.getElementById(
+          "pageTitle"
+        ).textContent = `Professional Tax Calculator India ${currentYear} - PTax Calculator for All States`;
+
+        // Update meta descriptions
+        document.getElementById(
+          "pageDescription"
+        ).content = `Free Professional Tax Calculator for India ${currentYear}. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes. Get instant PTax calculation results for tax year ${yearRange}.`;
+
+        // Update Open Graph tags
+        document.getElementById(
+          "ogTitle"
+        ).content = `Professional Tax Calculator India ${currentYear} - PTax Calculator for All States`;
+        document.getElementById(
+          "ogDescription"
+        ).content = `Free Professional Tax Calculator for India ${currentYear}. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes.`;
+
+        // Update Twitter tags
+        document.getElementById(
+          "twitterTitle"
+        ).content = `Professional Tax Calculator India ${currentYear}`;
+        document.getElementById(
+          "twitterDescription"
+        ).content = `Free Professional Tax Calculator for India ${currentYear}. Calculate PTax for all 39 states & UTs with salary-based slabs.`;
+
+        // Update structured data
+        const structuredDataElement = document.getElementById("structuredData");
+        const structuredData = JSON.parse(structuredDataElement.textContent);
+        structuredData.name = `Professional Tax Calculator India ${currentYear}`;
+        structuredData.description = `Free Professional Tax Calculator for India ${currentYear}. Calculate PTax for all 39 states & UTs with salary-based slabs, gender-specific rules, and multiple collection modes.`;
+        structuredData.dateModified = `${currentYear}-01-01`;
+        structuredDataElement.textContent = JSON.stringify(
+          structuredData,
+          null,
+          2
+        );
+
+        // Update content elements
+        const yearElements = document.querySelectorAll("[data-year]");
+        yearElements.forEach((element) => {
+          element.textContent = currentYear;
+        });
+
+        const yearRangeElements =
+          document.querySelectorAll("[data-year-range]");
+        yearRangeElements.forEach((element) => {
+          element.textContent = yearRange;
+        });
+      });
+    </script>
   </head>
   <body style="font-family: 'Arial', sans-serif; background-color: black">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
-          <i class="fas fa-calculator me-2"></i>PTax Calculator
+        <a
+          class="navbar-brand fw-bold"
+          href="#"
+          aria-label="PTax Calculator Home"
+        >
+          <i class="fas fa-calculator me-2" aria-hidden="true"></i>PTax
+          Calculator
         </a>
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#calculator">Calculator</a>
+              <a
+                class="nav-link"
+                href="#calculator"
+                aria-label="Go to calculator section"
+                >Calculator</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#states">States</a>
+              <a
+                class="nav-link"
+                href="#states"
+                aria-label="Go to states information"
+                >States</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#api">API</a>
+              <a
+                class="nav-link"
+                href="#api"
+                aria-label="Go to API documentation"
+                >API</a
+              >
             </li>
             <li class="nav-item">
               <a
                 class="nav-link"
                 href="https://github.com/frontlook-admin/PTaxApi-JS"
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit GitHub repository (opens in new tab)"
               >
-                <i class="fab fa-github me-1"></i>GitHub
+                <i class="fab fa-github me-1" aria-hidden="true"></i>GitHub
               </a>
             </li>
           </ul>
@@ -82,38 +269,60 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero-section bg-gradient text-white py-5">
+    <header class="hero-section bg-gradient text-white py-5" role="banner">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-8">
             <h1 class="display-4 fw-bold mb-3">
               Professional Tax Calculator
-              <span class="text-warning">for India</span>
+              <span class="text-warning"
+                >for India <span data-year></span
+              ></span>
             </h1>
             <p class="lead mb-4">
               Calculate Professional Tax (PTax) for all Indian states with
               comprehensive tax slabs, gender-specific rules, and multiple
-              collection modes.
+              collection modes. Get instant results for tax year
+              <span data-year-range></span>.
             </p>
-            <div class="d-flex flex-wrap gap-2 mb-4">
-              <span class="badge bg-light text-dark fs-6">39 States & UTs</span>
-              <span class="badge bg-light text-dark fs-6">100+ Tax Slabs</span>
-              <span class="badge bg-light text-dark fs-6"
+            <div
+              class="d-flex flex-wrap gap-2 mb-4"
+              role="list"
+              aria-label="Key features"
+            >
+              <span class="badge bg-light text-dark fs-6" role="listitem"
+                >39 States & UTs</span
+              >
+              <span class="badge bg-light text-dark fs-6" role="listitem"
+                >100+ Tax Slabs</span
+              >
+              <span class="badge bg-light text-dark fs-6" role="listitem"
                 >Gender-Specific Rules</span
               >
-              <span class="badge bg-light text-dark fs-6"
+              <span class="badge bg-light text-dark fs-6" role="listitem"
                 >Multiple Collection Modes</span
               >
             </div>
-            <a href="#calculator" class="btn btn-warning btn-lg me-3">
-              <i class="fas fa-calculator me-2"></i>Start Calculating
-            </a>
-            <a href="#api" class="btn btn-outline-light btn-lg">
-              <i class="fas fa-code me-2"></i>View API
-            </a>
+            <div class="d-flex flex-wrap gap-3">
+              <a
+                href="#calculator"
+                class="btn btn-warning btn-lg"
+                aria-label="Start calculating professional tax"
+              >
+                <i class="fas fa-calculator me-2" aria-hidden="true"></i>Start
+                Calculating
+              </a>
+              <a
+                href="#api"
+                class="btn btn-outline-light btn-lg"
+                aria-label="View API documentation"
+              >
+                <i class="fas fa-code me-2" aria-hidden="true"></i>View API
+              </a>
+            </div>
           </div>
           <div class="col-lg-4 text-center">
-            <div class="hero-illustration">
+            <div class="hero-illustration" aria-hidden="true">
               <i class="fas fa-rupee-sign display-1 opacity-75"></i>
             </div>
           </div>
@@ -122,32 +331,56 @@
     </header>
 
     <!-- Calculator Section -->
-    <section id="calculator" class="py-5">
+    <section
+      id="calculator"
+      class="py-5"
+      role="main"
+      aria-labelledby="calculator-heading"
+    >
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
             <div class="card shadow-lg border-0">
               <div class="card-header bg-primary text-white text-center py-3">
-                <h2 class="mb-0">
-                  <i class="fas fa-calculator me-2"></i>
-                  PTax Calculator
+                <h2 class="mb-0" id="calculator-heading">
+                  <i class="fas fa-calculator me-2" aria-hidden="true"></i>
+                  Professional Tax Calculator
                 </h2>
               </div>
               <div class="card-body p-4">
-                <form id="ptaxForm">
+                <form
+                  id="ptaxForm"
+                  role="form"
+                  aria-label="Professional tax calculation form"
+                >
                   <div class="row g-3 mb-4">
                     <div class="col-md-6">
                       <label for="stateSelect" class="form-label fw-semibold">
-                        <i class="fas fa-map-marker-alt me-1 text-primary"></i>
+                        <i
+                          class="fas fa-map-marker-alt me-1 text-primary"
+                          aria-hidden="true"
+                        ></i>
                         Select State
                       </label>
-                      <select class="form-select" id="stateSelect" required>
+                      <select
+                        class="form-select"
+                        id="stateSelect"
+                        required
+                        aria-describedby="stateHelp"
+                      >
                         <option value="">Choose a state...</option>
                       </select>
+                      <div id="stateHelp" class="form-text">
+                        Select your state or union territory for accurate PTax
+                        calculation
+                      </div>
                     </div>
                     <div class="col-md-6">
                       <label for="salaryInput" class="form-label fw-semibold">
-                        <i class="fas fa-rupee-sign me-1 text-primary"></i>
+                        <i
+                          class="fas fa-rupee-sign me-1 text-primary"
+                          aria-hidden="true"
+                        ></i>
                         Monthly Salary (₹)
                       </label>
                       <input
@@ -159,50 +392,63 @@
                         pattern="[0-9,]*"
                         autocomplete="off"
                         required
+                        aria-describedby="salaryHelp"
                       />
+                      <div id="salaryHelp" class="form-text">
+                        Enter your gross monthly salary before deductions
+                      </div>
                     </div>
                   </div>
 
                   <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                      <label class="form-label fw-semibold">
-                        <i class="fas fa-venus-mars me-1 text-primary"></i>
-                        Gender
-                      </label>
-                      <div class="d-flex gap-3">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="genderMale"
-                            value="Male"
-                            checked
-                          />
-                          <label class="form-check-label" for="genderMale"
-                            >Male</label
-                          >
+                      <fieldset>
+                        <legend class="form-label fw-semibold">
+                          <i
+                            class="fas fa-venus-mars me-1 text-primary"
+                            aria-hidden="true"
+                          ></i>
+                          Gender
+                        </legend>
+                        <div class="d-flex gap-3">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="gender"
+                              id="genderMale"
+                              value="Male"
+                              checked
+                            />
+                            <label class="form-check-label" for="genderMale"
+                              >Male</label
+                            >
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="gender"
+                              id="genderFemale"
+                              value="Female"
+                            />
+                            <label class="form-check-label" for="genderFemale"
+                              >Female</label
+                            >
+                          </div>
                         </div>
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="genderFemale"
-                            value="Female"
-                          />
-                          <label class="form-check-label" for="genderFemale"
-                            >Female</label
-                          >
-                        </div>
-                      </div>
+                      </fieldset>
                     </div>
                     <div class="col-md-6 d-flex align-items-end">
                       <button
                         type="submit"
                         class="btn btn-primary btn-lg w-100"
+                        aria-label="Calculate professional tax"
                       >
-                        <i class="fas fa-calculator me-2"></i>
+                        <i
+                          class="fas fa-calculator me-2"
+                          aria-hidden="true"
+                        ></i>
                         Calculate PTax
                       </button>
                     </div>
@@ -210,27 +456,46 @@
                 </form>
 
                 <!-- Loading State -->
-                <div id="loadingState" class="text-center py-4 d-none">
+                <div
+                  id="loadingState"
+                  class="text-center py-4 d-none"
+                  role="status"
+                  aria-live="polite"
+                >
                   <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
-                  <p class="mt-2 text-muted">Calculating your PTax...</p>
+                  <p class="mt-2 text-muted">
+                    Calculating your Professional Tax...
+                  </p>
                 </div>
 
                 <!-- Results Section -->
-                <div id="resultsSection" class="mt-4 d-none">
+                <div
+                  id="resultsSection"
+                  class="mt-4 d-none"
+                  role="region"
+                  aria-labelledby="results-heading"
+                >
                   <div class="alert alert-success border-0 shadow-sm">
                     <div class="row align-items-center">
                       <div class="col-md-8">
-                        <h4 class="alert-heading mb-2">
-                          <i class="fas fa-check-circle me-2"></i>
-                          PTax Calculation Result
+                        <h4 class="alert-heading mb-2" id="results-heading">
+                          <i
+                            class="fas fa-check-circle me-2"
+                            aria-hidden="true"
+                          ></i>
+                          Professional Tax Calculation Result
                         </h4>
                         <div id="resultDetails"></div>
                       </div>
                       <div class="col-md-4 text-center">
                         <div class="result-amount">
-                          <div class="h2 text-success mb-0" id="ptaxAmount">
+                          <div
+                            class="h2 text-success mb-0"
+                            id="ptaxAmount"
+                            aria-label="Professional tax amount"
+                          >
                             ₹0
                           </div>
                           <small class="text-muted">Per Month</small>
@@ -243,7 +508,7 @@
                   <div id="taxBreakdown" class="card mt-3">
                     <div class="card-header">
                       <h5 class="mb-0">
-                        <i class="fas fa-chart-pie me-2"></i>
+                        <i class="fas fa-chart-pie me-2" aria-hidden="true"></i>
                         Tax Breakdown
                       </h5>
                     </div>
@@ -254,9 +519,17 @@
                 </div>
 
                 <!-- Error State -->
-                <div id="errorState" class="alert alert-danger d-none">
+                <div
+                  id="errorState"
+                  class="alert alert-danger d-none"
+                  role="alert"
+                  aria-live="assertive"
+                >
                   <h5 class="alert-heading">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <i
+                      class="fas fa-exclamation-triangle me-2"
+                      aria-hidden="true"
+                    ></i>
                     Calculation Error
                   </h5>
                   <p class="mb-0" id="errorMessage"></p>
@@ -269,17 +542,25 @@
     </section>
 
     <!-- States Information Section -->
-    <section id="states" class="py-5" style="background-color: transparent">
+    <section
+      id="states"
+      class="py-5"
+      style="background-color: transparent"
+      aria-labelledby="states-heading"
+    >
       <div class="container">
         <div class="row">
           <div class="col-12 text-center mb-5">
-            <h2 class="display-5 fw-bold text-light">
-              <i class="fas fa-map-marked-alt me-3 text-primary"></i>
+            <h2 class="display-5 fw-bold text-light" id="states-heading">
+              <i
+                class="fas fa-map-marked-alt me-3 text-primary"
+                aria-hidden="true"
+              ></i>
               Supported States & Union Territories
             </h2>
             <p class="lead text-primary">
               Professional Tax calculation support for all Indian states and
-              union territories
+              union territories with updated <span data-year></span> tax slabs
             </p>
           </div>
         </div>
@@ -289,12 +570,17 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">
-                  <i class="fas fa-list me-2"></i>
+                  <i class="fas fa-list me-2" aria-hidden="true"></i>
                   All States & UTs
                 </h5>
               </div>
               <div class="card-body">
-                <div id="statesList" class="row g-2">
+                <div
+                  id="statesList"
+                  class="row g-2"
+                  role="list"
+                  aria-label="List of supported states and union territories"
+                >
                   <!-- States will be populated here -->
                 </div>
               </div>
@@ -305,51 +591,52 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-header bg-success text-white">
                 <h5 class="mb-0">
-                  <i class="fas fa-info-circle me-2"></i>
-                  PTax Information
+                  <i class="fas fa-info-circle me-2" aria-hidden="true"></i>
+                  Professional Tax Information
                 </h5>
               </div>
               <div class="card-body">
                 <div class="info-item mb-3">
                   <h6 class="text-primary">
-                    <i class="fas fa-calendar-alt me-2"></i>
+                    <i class="fas fa-calendar-alt me-2" aria-hidden="true"></i>
                     Collection Modes
                   </h6>
                   <p class="mb-0 text-muted">
                     Monthly, Quarterly, Half-Yearly, and Yearly collections
-                    supported
+                    supported based on state regulations
                   </p>
                 </div>
 
                 <div class="info-item mb-3">
                   <h6 class="text-primary">
-                    <i class="fas fa-venus-mars me-2"></i>
+                    <i class="fas fa-venus-mars me-2" aria-hidden="true"></i>
                     Gender-Specific Rules
                   </h6>
                   <p class="mb-0 text-muted">
                     Different tax slabs for male and female employees in some
-                    states
+                    states as per government guidelines
                   </p>
                 </div>
 
                 <div class="info-item mb-3">
                   <h6 class="text-primary">
-                    <i class="fas fa-chart-line me-2"></i>
+                    <i class="fas fa-chart-line me-2" aria-hidden="true"></i>
                     Progressive Tax Slabs
                   </h6>
                   <p class="mb-0 text-muted">
                     Tax rates increase with salary ranges for optimal tax
-                    calculation
+                    calculation and compliance
                   </p>
                 </div>
 
                 <div class="info-item">
                   <h6 class="text-primary">
-                    <i class="fas fa-clock me-2"></i>
+                    <i class="fas fa-clock me-2" aria-hidden="true"></i>
                     Real-time Calculation
                   </h6>
                   <p class="mb-0 text-muted">
-                    Instant PTax calculation based on current tax year 2025-2026
+                    Instant Professional Tax calculation based on current tax
+                    year <span data-year-range></span> with latest updates
                   </p>
                 </div>
               </div>
@@ -360,16 +647,16 @@
     </section>
 
     <!-- API Documentation Section -->
-    <section id="api" class="py-5">
+    <section id="api" class="py-5" aria-labelledby="api-heading">
       <div class="container">
         <div class="row">
           <div class="col-12 text-center mb-5">
-            <h2 class="display-5 fw-bold text-light">
-              <i class="fas fa-code me-3 text-primary"></i>
+            <h2 class="display-5 fw-bold text-light" id="api-heading">
+              <i class="fas fa-code me-3 text-primary" aria-hidden="true"></i>
               API Documentation
             </h2>
             <p class="lead text-primary">
-              Access PTax data programmatically through our REST API
+              Access Professional Tax data programmatically through our REST API
             </p>
           </div>
         </div>
@@ -379,7 +666,7 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-header bg-info text-white text-center">
                 <h5 class="mb-0">
-                  <i class="fas fa-map me-2"></i>
+                  <i class="fas fa-map me-2" aria-hidden="true"></i>
                   Get All States
                 </h5>
               </div>
@@ -394,8 +681,9 @@
                 <button
                   class="btn btn-outline-info btn-sm mt-2"
                   onclick="testApiEndpoint('states')"
+                  aria-label="Test states API endpoint"
                 >
-                  <i class="fas fa-play me-1"></i> Test API
+                  <i class="fas fa-play me-1" aria-hidden="true"></i> Test API
                 </button>
               </div>
             </div>
@@ -405,7 +693,7 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-header bg-warning text-dark text-center">
                 <h5 class="mb-0">
-                  <i class="fas fa-calculator me-2"></i>
+                  <i class="fas fa-calculator me-2" aria-hidden="true"></i>
                   Calculate PTax
                 </h5>
               </div>
@@ -423,8 +711,9 @@
                 <button
                   class="btn btn-outline-warning btn-sm mt-2"
                   onclick="testApiEndpoint('calculate')"
+                  aria-label="Test calculate PTax API endpoint"
                 >
-                  <i class="fas fa-play me-1"></i> Test API
+                  <i class="fas fa-play me-1" aria-hidden="true"></i> Test API
                 </button>
               </div>
             </div>
@@ -434,13 +723,13 @@
             <div class="card h-100 border-0 shadow-sm">
               <div class="card-header bg-success text-white text-center">
                 <h5 class="mb-0">
-                  <i class="fas fa-layer-group me-2"></i>
+                  <i class="fas fa-layer-group me-2" aria-hidden="true"></i>
                   Get Tax Slabs
                 </h5>
               </div>
               <div class="card-body">
                 <p class="text-muted">
-                  Get all PTax slabs for a specific state
+                  Get all Professional Tax slabs for a specific state
                 </p>
                 <div class="code-block">
                   <code class="text-success">GET</code>
@@ -449,8 +738,9 @@
                 <button
                   class="btn btn-outline-success btn-sm mt-2"
                   onclick="testApiEndpoint('slabs')"
+                  aria-label="Test tax slabs API endpoint"
                 >
-                  <i class="fas fa-play me-1"></i> Test API
+                  <i class="fas fa-play me-1" aria-hidden="true"></i> Test API
                 </button>
               </div>
             </div>
@@ -463,7 +753,7 @@
             <div class="card border-0 shadow-sm">
               <div class="card-header bg-dark text-white">
                 <h5 class="mb-0">
-                  <i class="fas fa-terminal me-2"></i>
+                  <i class="fas fa-terminal me-2" aria-hidden="true"></i>
                   API Response Example
                 </h5>
               </div>
@@ -471,6 +761,8 @@
                 <pre
                   id="apiResponseExample"
                   class="bg-light p-3 rounded"
+                  role="textbox"
+                  aria-label="API response example"
                 ><code>// Click "Test API" buttons above to see live responses</code></pre>
               </div>
             </div>
@@ -480,27 +772,34 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    <footer class="bg-dark text-white py-4" role="contentinfo">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
             <p class="mb-0">
-              <i class="fas fa-copyright me-1"></i>
-              2025 PTax Calculator. Open source project.
+              <i class="fas fa-copyright me-1" aria-hidden="true"></i>
+              <span data-year></span> Professional Tax Calculator India. Open
+              source project.
             </p>
           </div>
           <div class="col-md-6 text-md-end">
             <a
               href="https://github.com/frontlook-admin/PTaxApi-JS"
               class="text-white text-decoration-none me-3"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit GitHub repository (opens in new tab)"
             >
-              <i class="fab fa-github me-1"></i> GitHub
+              <i class="fab fa-github me-1" aria-hidden="true"></i> GitHub
             </a>
             <a
               href="https://github.com/frontlook-admin/PTaxApi-JS/issues"
               class="text-white text-decoration-none"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Report issue on GitHub (opens in new tab)"
             >
-              <i class="fas fa-bug me-1"></i> Report Issue
+              <i class="fas fa-bug me-1" aria-hidden="true"></i> Report Issue
             </a>
           </div>
         </div>
