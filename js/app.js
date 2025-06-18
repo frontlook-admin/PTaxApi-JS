@@ -245,9 +245,7 @@ class PTaxApp {
                 }, 800);
             }
         }
-    }
-
-    /**
+    }    /**
      * Display calculation results
      */
     displayResults(result) {
@@ -261,8 +259,32 @@ class PTaxApp {
             return;
         }
 
+        // Determine the correct period label based on collection mode
+        let periodLabel = 'Per Month';
+        if (result.collectionMode) {
+            switch (result.collectionMode.toUpperCase()) {
+                case 'YEARLY':
+                    periodLabel = 'Per Year';
+                    break;
+                case 'HALF YEARLY':
+                    periodLabel = 'Per Collection (Half-Yearly)';
+                    break;
+                case 'QUARTERLY':
+                    periodLabel = 'Per Collection (Quarterly)';
+                    break;
+                default:
+                    periodLabel = 'Per Month';
+            }
+        }
+
         // Update result amount
         ptaxAmount.textContent = this.calculator.formatCurrency(result.monthlyPTax);
+
+        // Update the period label
+        const periodLabelElement = ptaxAmount.parentElement.querySelector('small');
+        if (periodLabelElement) {
+            periodLabelElement.textContent = periodLabel;
+        }
 
         // Update result details
         resultDetails.innerHTML = `
@@ -291,18 +313,40 @@ class PTaxApp {
         setTimeout(() => {
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 300);
-    }
-
-    /**
+    }/**
      * Display tax breakdown
      */
     displayBreakdown(breakdown, container) {
+        // Determine the correct label based on collection mode
+        let taxPeriodLabel = 'Monthly PTax';
+        let taxPeriodIcon = 'fas fa-calendar-check';
+
+        if (breakdown.collectionMode) {
+            switch (breakdown.collectionMode.toUpperCase()) {
+                case 'YEARLY':
+                    taxPeriodLabel = 'Yearly PTax';
+                    taxPeriodIcon = 'fas fa-calendar';
+                    break;
+                case 'HALF YEARLY':
+                    taxPeriodLabel = 'Half-Yearly PTax';
+                    taxPeriodIcon = 'fas fa-calendar-alt';
+                    break;
+                case 'QUARTERLY':
+                    taxPeriodLabel = 'Quarterly PTax';
+                    taxPeriodIcon = 'fas fa-calendar-week';
+                    break;
+                default:
+                    taxPeriodLabel = 'Monthly PTax';
+                    taxPeriodIcon = 'fas fa-calendar-check';
+            }
+        }
+
         let html = `
             <div class="row g-3">
                 <div class="col-md-6">
                     <div class="breakdown-item">
                         <h6 class="text-primary mb-2">
-                            <i class="fas fa-calendar-check me-2"></i>Monthly PTax
+                            <i class="${taxPeriodIcon} me-2"></i>${taxPeriodLabel}
                         </h6>
                         <p class="h5 text-success mb-0">
                             ${this.calculator.formatCurrency(breakdown.monthlyAmount)}
@@ -340,9 +384,7 @@ class PTaxApp {
                     </div>
                 </div>
             `;
-        }
-
-        if (breakdown.installments && breakdown.installments.length > 0) {
+        } if (breakdown.installments && breakdown.installments.length > 0) {
             html += `
                 <hr class="my-3">
                 <h6 class="text-primary mb-3">
@@ -361,10 +403,15 @@ class PTaxApp {
             `;
 
             breakdown.installments.forEach(installment => {
+                // Check if this is a detailed monthly schedule with overrides
+                const isDetailedMonthly = installment.hasOwnProperty('isOverride');
+                const displayAmount = installment.amountDisplay || this.calculator.formatCurrency(installment.amount);
+                const rowClass = installment.isOverride ? 'table-warning' : '';
+
                 html += `
-                    <tr>
+                    <tr class="${rowClass}">
                         <td>${installment.period}</td>
-                        <td class="fw-semibold">${this.calculator.formatCurrency(installment.amount)}</td>
+                        <td class="fw-semibold">${displayAmount}</td>
                         <td>${installment.frequency}</td>
                     </tr>
                 `;
@@ -375,6 +422,19 @@ class PTaxApp {
                     </table>
                 </div>
             `;
+
+            // Add override legend if there are override amounts
+            const hasOverrides = breakdown.installments.some(inst => inst.isOverride);
+            if (hasOverrides) {
+                html += `
+                    <div class="alert alert-info mt-2 py-2">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            <strong>*</strong> Indicates override amount different from base rate
+                        </small>
+                    </div>
+                `;
+            }
         }
 
         container.innerHTML = html;

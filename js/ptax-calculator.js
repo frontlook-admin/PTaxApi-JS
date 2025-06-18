@@ -46,13 +46,13 @@ class PTaxCalculator {
             console.error('Error loading data:', error);
             throw error;
         }
-    }
-
-    /**
-     * Get all states
+    }    /**
+     * Get all states sorted alphabetically
      */
     getStates() {
-        return this.states.filter(state => !state.isActive); // Filter out inactive states if needed
+        return this.states
+            .filter(state => !state.isActive) // Filter out inactive states if needed
+            .sort((a, b) => a.stateName.localeCompare(b.stateName));
     }
 
     /**
@@ -124,7 +124,8 @@ class PTaxCalculator {
                 breakdown: this.generateBreakdown(0, 0, 'N/A', 'Salary below minimum tax threshold')
             };
         }        // Calculate PTax amount using C# logic (matches exactly)
-        const monthlyPTax = this.getPTaxAmount(applicableSlab, date);
+        const currentMonthPTax = this.getPTaxAmount(applicableSlab, date);
+        const basePTaxAmount = applicableSlab.PTaxAmt || 0; // Base monthly PTax amount
         const yearlyPTax = this.calculateYearlyPTax(applicableSlab, date);
 
         return {
@@ -132,12 +133,13 @@ class PTaxCalculator {
             stateCode: state.stateCode,
             salary: salary,
             gender: gender,
-            monthlyPTax: monthlyPTax, // Amount for this specific month
+            monthlyPTax: basePTaxAmount, // Base PTax amount (what the tax is per collection)
             yearlyPTax: yearlyPTax, // Total yearly amount (sum of all 12 months)
+            currentMonthPTax: currentMonthPTax, // Actual amount for current month (0 if not collection month)
             applicableSlab: applicableSlab,
             message: 'PTax calculated successfully',
             collectionMode: applicableSlab.collectionMode,
-            breakdown: this.generateBreakdown(monthlyPTax, yearlyPTax, applicableSlab.collectionMode, applicableSlab)
+            breakdown: this.generateBreakdown(basePTaxAmount, yearlyPTax, applicableSlab.collectionMode, applicableSlab)
         };
     }    /**
      * Get valid slabs for a specific state, gender, and date (matches C# caching logic)
@@ -217,30 +219,30 @@ class PTaxCalculator {
 
         // Handle collection mode and collection months (exactly like C# logic)
         if (slab.collectionMode === 'MONTHLY') {
-            return slab.monthlyPTaxAmt || 0;
+            return slab.PTaxAmt || 0;
         } else {
             // Find collection months for this mode
-            const collectionMonths = this.parseCollectionMonths(slab.ptaxCollectionMonth, slab.collectionMode);
-            
-            if (collectionMonths && collectionMonths.includes(month)) {
+            const collectionMonths = this.parseCollectionMonths(slab.ptaxCollectionMonth, slab.collectionMode); if (collectionMonths && collectionMonths.includes(month)) {
                 switch (slab.collectionMode.toUpperCase()) {
                     case 'YEARLY':
-                        return slab.monthlyPTaxAmt || 0; // Base amount, not multiplied
+                        return slab.PTaxAmt || 0; // Base amount for yearly collection
                     case 'QUARTERLY':
-                        return slab.monthlyPTaxAmt ? slab.monthlyPTaxAmt * 3 : 0; // 3 months worth
+                        return slab.PTaxAmt || 0; // Base amount per quarter (will be summed up for yearly)
                     case 'HALF YEARLY':
-                        return slab.monthlyPTaxAmt ? slab.monthlyPTaxAmt * 6 : 0; // 6 months worth
+                        return slab.PTaxAmt || 0; // Base amount per half-year (will be summed up for yearly)
                     default:
-                        return slab.monthlyPTaxAmt || 0;
+                        return slab.PTaxAmt || 0;
                 }
             }
             // Not a collection month for this mode
             return 0;
         }
-    }
-
-    /**
+    }    /**
      * Parse override amount patterns (supports month-specific overrides)
+     * Formats supported:
+     * - "2#300" - ₹300 only in month 2 (February), base amount in other months
+     * - "2#300;6#450" - ₹300 in month 2, ₹450 in month 6, base amount in other months
+     * - "3#250;7#350;12#400" - Multiple month-specific overrides
      */
     parseOverrideAmount(overrideAmt, currentMonth) {
         if (!overrideAmt) return null;
@@ -248,21 +250,26 @@ class PTaxCalculator {
         // Handle simple numeric override
         if (typeof overrideAmt === 'number') {
             return overrideAmt;
-        }
-
-        // Handle string patterns like "2#300" (meaning ₹300 from 2nd month onwards)
+        }        // Handle string patterns like "2#300" or "2#300;6#450" (multiple month-specific overrides)
         if (typeof overrideAmt === 'string') {
             if (overrideAmt.includes('#')) {
-                const parts = overrideAmt.split('#');
-                if (parts.length === 2) {
-                    const fromMonth = parseInt(parts[0]);
-                    const amount = parseFloat(parts[1]);
+                // Split by semicolon to handle multiple overrides
+                const overrides = overrideAmt.split(';');
 
-                    if (currentMonth >= fromMonth) {
-                        return amount;
+                for (const override of overrides) {
+                    const parts = override.trim().split('#');
+                    if (parts.length === 2) {
+                        const overrideMonth = parseInt(parts[0]);
+                        const amount = parseFloat(parts[1]);
+
+                        if (currentMonth === overrideMonth) {
+                            return amount; // Override amount for this specific month
+                        }
                     }
-                    return 0; // Before the override month
                 }
+
+                // No override found for current month, use base amount
+                return null;
             }
 
             // Simple string number
@@ -282,38 +289,41 @@ class PTaxCalculator {
             return collectionMode === 'MONTHLY' ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : null;
         }
 
-        // Parse patterns like "Y:10", "H:2", "Q:3"
+        // Parse patterns like "Y:10", "H:2,8", "Q:3,6,9,12"
         const parts = ptaxCollectionMonth.split(':');
         if (parts.length !== 2) return null;
 
         const mode = parts[0];
-        const baseMonth = parseInt(parts[1]);
 
-        switch (mode.toUpperCase()) {
+        const baseMonths = parts[1].split(',').map(m => parseInt(m.trim())); switch (mode.toUpperCase()) {
             case 'Y': // Yearly
-                return [baseMonth];
+                return baseMonths; // Return the specified months directly
             case 'H': // Half-yearly
-                return [baseMonth, baseMonth + 6].map(m => m > 12 ? m - 12 : m);
+                return baseMonths; // Return the specified months directly (e.g., "H:2,8" means months 2 and 8)
             case 'Q': // Quarterly
-                return [baseMonth, baseMonth + 3, baseMonth + 6, baseMonth + 9]
-                    .map(m => m > 12 ? m - 12 : m);
+                return baseMonths; // Return the specified months directly (e.g., "Q:3,6,9,12" means months 3,6,9,12)
             default:
                 return null;
         }
     }    /**
      * Calculate yearly PTax by summing up all 12 months (proper calculation)
+     * This correctly handles different collection modes:
+     * - Monthly: Sum of all 12 months
+     * - Half-Yearly: Sum of amounts in collection months only (e.g., Feb + Aug)
+     * - Quarterly: Sum of amounts in collection months only 
+     * - Yearly: Amount in collection month only
      */
     calculateYearlyPTax(slab, baseDate) {
         let yearlyTotal = 0;
         const year = baseDate.getFullYear();
-        
+
         // Calculate PTax for each month of the year
         for (let month = 1; month <= 12; month++) {
             const monthDate = new Date(year, month - 1, 1); // month - 1 because JS months are 0-based
             const monthlyAmount = this.getPTaxAmount(slab, monthDate);
             yearlyTotal += monthlyAmount;
         }
-        
+
         return yearlyTotal;
     }
 
@@ -336,38 +346,78 @@ class PTaxCalculator {
             yearlyAmount: yearlyPTax,
             collectionMode: collectionMode,
             installments: []
-        };
-
-        if (slab) {
+        }; if (slab) {
             breakdown.salaryRange = `₹${slab.amtFrom?.toLocaleString('en-IN')} - ${slab.amtTo ? '₹' + slab.amtTo.toLocaleString('en-IN') : 'Above'}`;
             breakdown.taxSession = `${slab.ptaxSessionFromMonth} ${slab.ptaxFromYear} to ${slab.ptaxSessionToMonth} ${slab.ptaxToYear}`;
 
-            // Calculate installment details based on collection mode
-            switch (collectionMode.toUpperCase()) {
-                case 'MONTHLY':
-                    breakdown.installments = [
-                        { period: 'Monthly', amount: monthlyPTax, frequency: '12 times per year' }
-                    ];
-                    break;
-                case 'QUARTERLY':
-                    breakdown.installments = [
-                        { period: 'Quarterly', amount: monthlyPTax, frequency: '4 times per year' }
-                    ];
-                    break;
-                case 'HALF YEARLY':
-                    breakdown.installments = [
-                        { period: 'Half-Yearly', amount: monthlyPTax, frequency: '2 times per year' }
-                    ];
-                    break;
-                case 'YEARLY':
-                    breakdown.installments = [
-                        { period: 'Yearly', amount: yearlyPTax, frequency: '1 time per year' }
-                    ];
-                    break;
+            // Add collection month information
+            if (slab.ptaxCollectionMonth) {
+                const collectionMonths = this.parseCollectionMonths(slab.ptaxCollectionMonth, slab.collectionMode);
+                if (collectionMonths) {
+                    const monthNames = collectionMonths.map(m => {
+                        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        return monthNames[m - 1];
+                    });
+                    breakdown.collectionMonths = `Collected in: ${monthNames.join(', ')}`;
+                }
+            }            // For monthly collection mode, always show detailed monthly schedule
+            if (collectionMode.toUpperCase() === 'MONTHLY') {
+                // Generate monthly schedule (with or without override amounts)
+                breakdown.installments = this.generateMonthlySchedule(slab);
+            } else {
+                // Calculate installment details based on collection mode
+                switch (collectionMode.toUpperCase()) {
+                    case 'QUARTERLY':
+                        breakdown.installments = [
+                            { period: 'Quarterly', amount: monthlyPTax, frequency: '4 times per year', description: 'Collected once every 3 months' }
+                        ];
+                        break;
+                    case 'HALF YEARLY':
+                        breakdown.installments = [
+                            { period: 'Half-Yearly', amount: monthlyPTax, frequency: '2 times per year', description: 'Collected twice per year' }
+                        ];
+                        break;
+                    case 'YEARLY':
+                        breakdown.installments = [
+                            { period: 'Yearly', amount: monthlyPTax, frequency: '1 time per year', description: 'Collected once per year' }
+                        ];
+                        break;
+                }
             }
+        } return breakdown;
+    }    /**
+     * Generate monthly schedule for monthly collection mode (with or without override amounts)
+     */
+    generateMonthlySchedule(slab) {
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const installments = [];
+        const basePTaxAmount = slab.PTaxAmt || 0;
+
+        for (let month = 1; month <= 12; month++) {
+            const overrideAmount = this.parseOverrideAmount(slab.overrideAmt, month);
+            const amount = overrideAmount !== null ? overrideAmount : basePTaxAmount;
+
+            let amountDisplay = this.formatCurrency(amount);
+            let description = '';
+
+            if (overrideAmount !== null && overrideAmount !== basePTaxAmount) {
+                description = `Override: ${amountDisplay} (Base: ${this.formatCurrency(basePTaxAmount)})`;
+                amountDisplay = `${amountDisplay} *`; // Add asterisk to indicate override
+            } else {
+                description = 'Base amount';
+            }
+
+            installments.push({
+                period: monthNames[month - 1],
+                amount: amount,
+                amountDisplay: amountDisplay,
+                frequency: 'Monthly',
+                description: description,
+                isOverride: overrideAmount !== null && overrideAmount !== basePTaxAmount
+            });
         }
 
-        return breakdown;
+        return installments;
     }
 
     /**
@@ -406,10 +456,8 @@ class PTaxCalculator {
             currency: 'INR',
             maximumFractionDigits: 0
         }).format(amount);
-    }
-
-    /**
-     * Get states with PTax (states that have tax slabs)
+    }    /**
+     * Get states with PTax (states that have tax slabs) sorted alphabetically
      */
     getStatesWithPTax() {
         const statesWithPTax = new Set();
@@ -417,7 +465,9 @@ class PTaxCalculator {
             statesWithPTax.add(slab.stateGovId);
         });
 
-        return this.states.filter(state => statesWithPTax.has(state.govId));
+        return this.states
+            .filter(state => statesWithPTax.has(state.govId))
+            .sort((a, b) => a.stateName.localeCompare(b.stateName));
     }
 
     /**
